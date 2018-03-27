@@ -16,7 +16,7 @@ class MeshHttpClientFactory implements FactoryInterface
     /**
      * Mesh DataStore service name
      */
-    const KEY_MESH_DATASTORE = "meshDataStore";
+    const KEY_MESH_SERVICE = "meshDataStore";
 
     /**
      * Default url name
@@ -48,7 +48,7 @@ class MeshHttpClientFactory implements FactoryInterface
     {
         $config = $container->get("config");
         $factoryConfig = $config[static::KEY];
-        $meshDataStore = $container->get($factoryConfig[static::KEY_MESH_DATASTORE]);
+        $meshDataStore = $container->get($factoryConfig[static::KEY_MESH_SERVICE]);
         $uri = isset($config[static::KEY_URL]) ? $config[static::KEY_URL] : null;
         $options = isset($config[static::KEY_OPTIONS]) ? $config[static::KEY_OPTIONS] : null;
         return new MeshHttpClient($meshDataStore, $uri, $options);

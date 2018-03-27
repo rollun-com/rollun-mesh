@@ -3,7 +3,10 @@
 namespace rollun\test\MeshTest;
 
 use rollun\datastore\DataStore\Memory;
-use rollun\mesh\DataStore\Interfaces\MeshInterface;
+use rollun\dic\InsideConstruct;
+use rollun\mesh\DataStore\Interfaces\MeshInterface as MeshDataStoreInterface;
+use rollun\mesh\DataStoreMesh;
+use rollun\mesh\MeshInterface;
 use rollun\mesh\MeshHttpClient;
 use PHPUnit\Framework\TestCase;
 
@@ -12,18 +15,25 @@ class MeshHttpClientTest extends TestCase
     /** @var MeshHttpClient */
     protected $object;
 
-    /** @var MeshInterface */
+    /** @var MeshDataStoreInterface */
     protected $meshDataStore;
+
+    /** @var MeshInterface */
+    private $meshService;
 
     /**
      * Init mesh dataStore and meshHttpClient
      */
     public function setUp()
     {
-        $this->meshDataStore = new class extends Memory implements MeshInterface
+        $container = require 'config/container.php';
+        InsideConstruct::setContainer($container);
+        $this->meshDataStore = new class extends Memory implements MeshDataStoreInterface
         {
+
         };
-        $this->object = new MeshHttpClient($this->meshDataStore);
+        $this->meshService = new DataStoreMesh($this->meshDataStore);
+        $this->object = new MeshHttpClient($this->meshService);
     }
 
     /**
@@ -75,8 +85,8 @@ class MeshHttpClientTest extends TestCase
         foreach ($hosts as $name => $host) {
             $this->meshDataStore->create([
                 $this->meshDataStore->getIdentifier() => uniqid(),
-                MeshInterface::FIELD_SERVICE_NAME => $name,
-                MeshInterface::FIELD_SERVICE_HOST => $host,
+                MeshDataStoreInterface::FIELD_SERVICE_NAME => $name,
+                MeshDataStoreInterface::FIELD_SERVICE_HOST => $host,
             ]);
         }
     }

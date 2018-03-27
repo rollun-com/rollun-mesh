@@ -3,6 +3,7 @@
 namespace rollun\mesh;
 
 use rollun\mesh\DataStore\Interfaces\MeshInterface;
+use rollun\mesh\Factory\DataStoreMeshFactory;
 use rollun\mesh\Factory\MeshHttpClientFactory;
 
 /**
@@ -35,7 +36,8 @@ class ConfigProvider
             'invokables' => [],
             // Use 'factories' for services provided by callbacks/factory classes.
             'factories' => [
-                MeshHttpClient::class => MeshHttpClientFactory::class
+                MeshHttpClient::class => MeshHttpClientFactory::class,
+                DataStoreMesh::class => DataStoreMeshFactory::class
             ],
             "abstract_factories" => []
         ];
@@ -48,7 +50,7 @@ class ConfigProvider
     public function getMeshHttpClientFactoryConfig()
     {
         return [
-            MeshHttpClientFactory::KEY_MESH_DATASTORE => MeshInterface::class,
+            MeshHttpClientFactory::KEY_MESH_SERVICE => MeshInterface::class,
         ];
     }
 }
