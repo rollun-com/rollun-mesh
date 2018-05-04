@@ -59,12 +59,12 @@ class MeshTableInstaller extends InstallerAbstract
 
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @param string $adapterName
+     * @return TableManagerMysql
      */
-    protected function getTableManager()
+    protected function getTableManager($adapterName = "db")
     {
-        $dbAdapter = $this->container->get('db');
+        $dbAdapter = $this->container->get($adapterName);
         $tableConfig = [
             TableManagerMysql::KEY_TABLES_CONFIGS => array_merge(
                 MeshTable::getTableConfig()

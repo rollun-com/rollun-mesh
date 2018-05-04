@@ -2,13 +2,13 @@
 
 namespace rollun\mesh;
 
-use rollun\mesh\DataStore\Interfaces\MeshInterface;
+use rollun\mesh\MeshInterface;
 use rollun\mesh\Factory\DataStoreMeshFactory;
 use rollun\mesh\Factory\MeshHttpClientFactory;
 
 /**
  * Class ConfigProvider
- * You need provided MeshInterface::class service.
+ * You need provided MeshDataStoreInterface::class service.
  * @package rollun\mesh
  */
 class ConfigProvider
@@ -29,7 +29,9 @@ class ConfigProvider
         return [
             // Use 'aliases' to alias a service name to another service. The
             // key is the alias name, the value is the service to which it points.
-            'aliases' => [],
+            'aliases' => [
+                MeshInterface::class => DataStoreMesh::class,
+            ],
             // Use 'invokables' for constructor-less services, or services that do
             // not require arguments to the constructor. Map a service name to the
             // class name.

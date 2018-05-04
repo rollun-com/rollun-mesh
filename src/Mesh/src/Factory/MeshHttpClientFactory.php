@@ -16,7 +16,7 @@ class MeshHttpClientFactory implements FactoryInterface
     /**
      * Mesh DataStore service name
      */
-    const KEY_MESH_SERVICE = "meshDataStore";
+    const KEY_MESH_SERVICE = "meshService";
 
     /**
      * Default url name
