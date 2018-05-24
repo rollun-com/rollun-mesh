@@ -6,6 +6,7 @@ namespace rollun\mesh;
 use rollun\dic\InsideConstruct;
 use Zend\Http\Exception\InvalidArgumentException;
 use Zend\Http\Client;
+use Zend\Http\Request;
 use Zend\Uri\Exception as UriException;
 use Zend\Uri\Http as HttpUri;
 
@@ -71,4 +72,17 @@ class MeshHttpClient extends Client
         }
         return parent::setUri($uri);
     }
+
+    /**
+     * @param Request $request
+     * @return $this|Client
+     */
+    public function setRequest(Request $request)
+    {
+        parent::setRequest($request);
+        $this->setUri($request->getUri());
+        return $this;
+    }
+
+
 }
